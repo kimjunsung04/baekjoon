@@ -1,0 +1,1 @@
+print("47\nkimjunsung04")
