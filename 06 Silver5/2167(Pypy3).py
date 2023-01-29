@@ -1,3 +1,4 @@
+# sourcery skip: sum-comprehension, use-itertools-product
 n, m = map(int, input().split())
 
 mapList = [list(map(int, input().split())) for _ in range(n)]
