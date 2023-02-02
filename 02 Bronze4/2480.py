@@ -1,8 +1,4 @@
-a, b, c = map(int, input().split())
-
-sumMoney = 0
-
-abcList = [a, b, c]
+abcList = list(map(int, input().split()))
 
 for item in abcList:
     if abcList.count(item) == 3:
