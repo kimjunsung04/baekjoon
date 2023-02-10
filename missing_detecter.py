@@ -10,6 +10,7 @@ def get_solvedac_data(user_id: str, page: int = 1) -> dict:
 
 def get_solvedac_data_all(user_id: str) -> dict:
     all_probles = []
+    print("Solved.ac 데이터를 가져오는 중입니다... [1]")
     temp_data = get_solvedac_data(user_id=user_id, page=1)
     if temp_data["count"] > 50:
         all_probles.extend(temp_data["items"])
@@ -18,14 +19,16 @@ def get_solvedac_data_all(user_id: str) -> dict:
         else:
             loop_val = temp_data["count"] // 50
         for page in range(2, loop_val + 2):
+            print(f"Solved.ac 데이터를 가져오는 중입니다... [{page}/{loop_val+1}]")
             all_probles.extend(get_solvedac_data(user_id=user_id, page=page)["items"])
     return all_probles
 
 
 def get_local_data(path: str) -> list:
+    print("로컬 데이터를 가져오는 중입니다...")
     local_file_datas = []
     black_list_file = ["missing_detecter.py"]
-    white_list_ext = ["py", "cpp", "java", "gs", "ada"]
+    white_list_ext = ["py", "cpp", "java", "gs", "ada", "b"]
     black_list_folder = [".git", ".idea"]
     for root, _, files in os.walk(path):
         local_file_datas.extend(
@@ -43,8 +46,12 @@ def get_local_data(path: str) -> list:
 local_file_datas = get_local_data(path="D:\\Desktop\\github\\baekjoon")
 all_probles = get_solvedac_data_all(user_id="kimjunsung04")
 
+
+print("=============검사 결과=============")
 for problem in all_probles:
     if problem["problemId"] not in local_file_datas:
         print(
             f"{problem['problemId']} : {problem['titleKo']}\nhttps://www.acmicpc.net/problem/{problem['problemId']}"
         )
+print("==================================")
+print("검사가 완료되었습니다.")
